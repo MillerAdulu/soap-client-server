@@ -1,0 +1,87 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://localhost:7000/universities" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://localhost:7000/universities" targetNamespace="http://localhost:7000/universities">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://localhost:7000/universities">
+            <xs:element name="getUniversityRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="name" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getUniversityResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="university" type="tns:university"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getAllUniversitiesRequest">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getAllUniversitiesResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="university" type="tns:university"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="university">
+                <xs:sequence>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="yearFounded" type="xs:int"/>
+                    <xs:element name="location" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getAllUniversitiesResponse">
+        <wsdl:part element="tns:getAllUniversitiesResponse" name="getAllUniversitiesResponse"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getUniversityResponse">
+        <wsdl:part element="tns:getUniversityResponse" name="getUniversityResponse"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getAllUniversitiesRequest">
+        <wsdl:part element="tns:getAllUniversitiesRequest" name="getAllUniversitiesRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getUniversityRequest">
+        <wsdl:part element="tns:getUniversityRequest" name="getUniversityRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="UniversitiesPort">
+        <wsdl:operation name="getAllUniversities">
+            <wsdl:input message="tns:getAllUniversitiesRequest" name="getAllUniversitiesRequest"> </wsdl:input>
+            <wsdl:output message="tns:getAllUniversitiesResponse" name="getAllUniversitiesResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getUniversity">
+            <wsdl:input message="tns:getUniversityRequest" name="getUniversityRequest"> </wsdl:input>
+            <wsdl:output message="tns:getUniversityResponse" name="getUniversityResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="UniversitiesPortSoap11" type="tns:UniversitiesPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getAllUniversities">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="getAllUniversitiesRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getAllUniversitiesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getUniversity">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="getUniversityRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getUniversityResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="UniversitiesPortService">
+        <wsdl:port binding="tns:UniversitiesPortSoap11" name="UniversitiesPortSoap11">
+            <soap:address location="http://localhost:7000/ws/universities-list"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
